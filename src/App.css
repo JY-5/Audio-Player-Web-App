@@ -1,0 +1,78 @@
+.App {
+  text-align: center;
+  margin: 2rem;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.audio-image {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.waveform {
+  width: 40rem;
+}
+
+.player-panel {
+  display: grid;
+  grid-template-columns: 1fr 20rem;
+}
+
+.player-panel button {
+  border: none;
+  font-size: 3rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.player-panel .initial {
+  font-size: 10px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.player-panel .timeline-comment {
+  display: none;
+}
+
+.player-panel .timeline-comment:hover {
+}
+
+.audio-info {
+  display: flex;
+
+}
+
+.audio-info .info {
+  margin-right: 1rem;
+}
