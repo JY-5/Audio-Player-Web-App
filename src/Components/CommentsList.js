@@ -8,8 +8,9 @@ export const CommentsList = (props) => {
 
             <ul>
                 {props.commentsList ? props.commentsList.map((comment) => {
-                    console.log('comment', comment);
+                    //console.log('comment', comment);
                     return (<li key={comment._id}>
+                        <img src={comment.avatar} alt=""/>
                         <p>
                             <span>{comment.username} </span>
                             at
