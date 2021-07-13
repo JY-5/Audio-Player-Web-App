@@ -31,6 +31,7 @@ def getComments():
 
     for comment in commentsListCursor:
         comment['_id'] = str(comment['_id'])
+        comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&rounded=true&size=28&name=" + comment['username'][0:1]
         commentsList.append(comment)
         lastTimelineComment = 0
         if lastTimelineComment != 0 and comment['timestamp'] == lastTimelineComment['timestamp']:
@@ -39,6 +40,9 @@ def getComments():
             timelineComments.append(comment)
         lastTimelineComment = timelineComments[len(timelineComments) - 1]
 
+    for comment in timelineComments:
+        comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&size=28&name=" + comment['username'][0:1]
+    
     print("commentlist", commentsList)
     print("timelinecoments", timelineComments)
     comments = {'commentsList' : commentsList, 'timelineComments' : timelineComments}

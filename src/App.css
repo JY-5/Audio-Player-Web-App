@@ -39,13 +39,10 @@
   border-radius: 4px;
 }
 
-.waveform {
-  width: 40rem;
-}
-
 .player-panel {
   display: grid;
-  grid-template-columns: 1fr 20rem;
+  grid-template-columns: 50rem 20rem;
+  gap: 2rem;
 }
 
 .player-panel button {
@@ -66,6 +63,23 @@
 }
 
 .player-panel .timeline-comment:hover {
+}
+
+.player-panel .canvas-panel {
+  position: relative;
+}
+
+.player-panel .waveform {
+  max-width: 100%;
+  z-index: 0;
+}
+
+.player-panel .canvas {
+  border:1px solid #6d6b6b;
+	z-index:1;
+  position: absolute;
+  top: 13rem;
+  left: 0;
 }
 
 .audio-info {
