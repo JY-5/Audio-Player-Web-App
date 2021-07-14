@@ -1,6 +1,6 @@
 .App {
-  text-align: center;
-  margin: 2rem;
+  margin: 1rem 3rem 2rem 3rem;
+  font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif
 }
 
 .App-logo {
@@ -34,6 +34,11 @@
   }
 }
 
+.audio-image-panel{
+  display: flex;
+  align-items: center;
+}
+
 .audio-image {
   max-width: 100%;
   border-radius: 4px;
@@ -41,15 +46,40 @@
 
 .player-panel {
   display: grid;
-  grid-template-columns: 50rem 20rem;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
+  background-color: #404040;
+  border-radius: 4px;
+  padding: 1rem;
+  padding-top: 0;
+  font-family: Tahoma;
+  color: aliceblue;
+}
+
+.player-panel .artist {
+  background-color: rgba(41, 39, 39, 0.9);
+  padding: 0.3rem;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.player-panel .audio-name {
+  background-color: rgba(41, 39, 39, 0.9);
+  font-size: 1.5rem;
+  padding: 0.4rem;
 }
 
 .player-panel button {
   border: none;
   font-size: 3rem;
   padding: 1rem;
+}
+
+.player-panel .fa {
+  margin: 1rem;
+  font-size: 6rem;
   cursor: pointer;
+  color: rgb(255, 131, 7);
 }
 
 .player-panel .initial {
@@ -62,31 +92,70 @@
   display: none;
 }
 
-.player-panel .timeline-comment:hover {
-}
-
 .player-panel .canvas-panel {
   position: relative;
 }
 
 .player-panel .waveform {
-  max-width: 100%;
   z-index: 0;
 }
 
 .player-panel .canvas {
   border:1px solid #6d6b6b;
-	z-index:1;
+	z-index: 2;
   position: absolute;
   top: 13rem;
   left: 0;
 }
 
+.add-comment-panel .username {
+  width: 10rem;
+  margin-right: 1rem;
+}
+
+.add-comment-panel .comment {
+  width: 20rem;
+}
+
+.post {
+  margin-left: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  border-color: grey;
+  border-radius: 3px;
+}
+
 .audio-info {
   display: flex;
-
 }
 
 .audio-info .info {
   margin-right: 1rem;
+}
+
+.comments-list {
+  list-style: none;
+  overflow-y: auto;
+}
+
+.comments-list .info {
+  display: flex;  
+  color: rgb(112, 112, 112);
+}
+
+.comments-list .avatar {
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+
+.comments-list .username {
+  margin-right: 1rem;
+}
+
+.comments-list .at {
+  color:rgb(151, 149, 149);
+}
+
+.comments-list .minute {
+  margin-left: 1rem;
 }

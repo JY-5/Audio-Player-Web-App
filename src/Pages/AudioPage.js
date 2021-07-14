@@ -13,8 +13,6 @@ export const AudioPage = () => {
     const fetchComments = () => {
         getComments()
         .then((data) => {
-            console.log("success");
-            console.log(data);
             setComments(data);
         })
         .catch( err => {

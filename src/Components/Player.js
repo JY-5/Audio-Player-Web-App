@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import WaveSurfer from "wavesurfer.js";
 import { createComment } from "../services";
+import 'font-awesome/css/font-awesome.min.css';
 
 export const Player = (props) => {
     const [playing, setPlaying] = useState(false);
@@ -12,8 +13,8 @@ export const Player = (props) => {
     const [username, setUsername] = useState("");
     const [comment, setComment] = useState("");
     const [timestamp, setTimestamp] = useState("");
-    
-    //const [commentInfo, setCommentInfo] = useState({ username: "", comment: "", timestamp: ""});
+    const [minute, setMinute] = useState(0);
+    const [second, setSecond] = useState(0);
     function handleChangeUsername(e) {
         setUsername(e.target.value);
     }
@@ -23,19 +24,34 @@ export const Player = (props) => {
             const time = wavesurferObject.getCurrentTime();
             console.log("timestamp", time);
             setTimestamp(time);
+            const minuteInput = Math.floor(time / 60);
+            setMinute(minuteInput);
+            const secondInput = Math.floor(time % 60);
+            setSecond(secondInput);
         } 
         setComment(e.target.value);
+    }
+
+    function handleChangeMinute(e) {
+        const minuteInput = parseInt(e.target.value);
+        setMinute(minuteInput);
+        const newTimestamp = minuteInput * 60 + second;
+        setTimestamp(newTimestamp);
+    }
+
+    function handleChangeSecond(e) {
+        const secondInput = parseInt(e.target.value);
+        setSecond(secondInput);
+        const newTimestamp = minute * 60 + secondInput;
+        setTimestamp(newTimestamp);
     }
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const width = fitToContainer(canvas);
-
         const ctx = canvas.getContext('2d');
 
-        //ctx.drawImage(img, 100, 100);
         if (props.timelineComments) {
-            console.log("props.timelineComments", props.timelineComments);
             for (let comment of props.timelineComments) {
                 const img = new Image();
                 img.src = comment.avatar;
@@ -48,24 +64,15 @@ export const Player = (props) => {
                     ctx.drawImage(img, x, 0);
                 }
             }
-            canvas.addEventListener("mouseenter", (e) => {
-                console.log("mouse over")
+            /*canvas.addEventListener("mouseenter", (e) => {
                 e.stopPropagation();
-
                 const text = props.timelineComments[e.target.className];
-                console.log("e.target.className", e.target.className)
-                console.log("text", text)
-                /*const box = canvas.getBoundingClientRect();
-                const mouseX = (e.clientX - box.left) * canvas.width / box.width
-                const mouseY = (e.clientY - box.top) * canvas.height / box.height
-                ctx.strokeText(text, mouseX, 50);*/
                 timelineCommentRef.current.innerText = text;
             });
             canvas.addEventListener("mouseleave", (e) => {
                 timelineCommentRef.current.innerText = "";
-            });
+            });*/
         } 
-        //context.fillStyle = 'rgba(255, 255, 255, 0)';
     })
 
     function fitToContainer(canvas){
@@ -82,8 +89,8 @@ export const Player = (props) => {
         if(waveformRef.current) {
             const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
-                waveColor: 'green',
-                progressColor: 'blue',
+                waveColor: 'white',
+                progressColor: '#FF8000',
                 barWidth: 2,
                 height: 400,
                 cursorColor: 'transparent',
@@ -96,7 +103,6 @@ export const Player = (props) => {
                 const durationData = parseInt(wavesurfer.getDuration());
                 setDuration(durationData);
                 wavesurfer.setVolume(0.5);
-                //wavesurfer.play();
             });
             return () => this ? this.wavesurfer.current.destroy() : null;
         }
@@ -107,6 +113,10 @@ export const Player = (props) => {
             wavesurferObject.on("seek", function(progress) {
                 const time = wavesurferObject.getDuration() * progress;
                 setTimestamp(time);
+                const minuteInput = Math.floor(time / 60);
+                setMinute(minuteInput);
+                const secondInput = Math.floor(time % 60);
+                setSecond(secondInput);
             });
         }
     })
@@ -114,19 +124,14 @@ export const Player = (props) => {
     function handlePlay() {
         if (playing) {
             wavesurferObject.pause();
-            console.log("pause");
         } else {
             wavesurferObject.play();
-            console.log("play");
-
         }
         setPlaying(!playing);
     }
 
     function handleSubmitComment(e) {
         e.preventDefault();
-
-
         createComment(username, comment, timestamp)
         .then(() => {
             console.log("success");
@@ -150,11 +155,13 @@ export const Player = (props) => {
                     <div className="audio-info">
                         <div className="info">
                             <p className="artist">Kevin Manickam</p>
-                            <p>Relaxation Music</p>
+                            <p className="audio-name">Relaxation Music</p>
                         </div>
-                        <button onClick={handlePlay} >
-                            {!playing ? '▶' : '■'}
-                        </button>
+                        {!playing ?
+                        <i className="fa fa-play-circle-o" onClick={handlePlay}></i>
+                            :
+                        <i className="fa fa-pause-circle-o" onClick={handlePlay}></i>
+                        }
                     </div>
                     <div className="canvas-panel">                 
                         <div className="waveform" ref={waveformRef}></div>
@@ -163,16 +170,20 @@ export const Player = (props) => {
                     </div>
 
                 </div>
-                <div>
+                <div className="audio-image-panel">
                     <img className="audio-image" src="https://i.ytimg.com/vi/6lt2JfJdGSY/maxresdefault.jpg" alt=""/>
                 </div>
             </div>
             <p className="timeline-comment" ref={timelineCommentRef}></p>
-            <form>
-                <input type="text" value={username} onChange={handleChangeUsername} placeholder="Username"/>
-                <input type="text" value={comment} onChange={handleChangeComment} placeholder="Write a comment"/>
-                <input type="submit" value="Post" onClick={handleSubmitComment}/>
-            </form>
+            <div className="add-comment-panel">
+                <input type="text" value={username} onChange={handleChangeUsername} className="username" placeholder="Username"/>
+                <input type="text" value={comment} onChange={handleChangeComment} className="comment" placeholder="Write a comment"/>
+                <span> at </span>
+                <input type="text" value={minute} onChange={handleChangeMinute} placeholder="Minute" />
+                <span> : </span>
+                <input type="text" value={second} onChange={handleChangeSecond} placeholder="Second" />
+                <input type="submit" value="Post" onClick={handleSubmitComment} className="post"/>
+            </div>
         </div>
     )
     
