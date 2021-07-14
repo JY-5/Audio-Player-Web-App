@@ -15,7 +15,7 @@ def index():
 
 @app.route('/api/comment', methods=['POST'])
 def addComent():
-    #add_comment
+    #add comment
     data = request.get_json()
     print(data)
     data['createdTime'] = time.time()
@@ -46,8 +46,6 @@ def getComments():
     for comment in timelineComments:
         comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&size=28&name=" + comment['username'][0:1]
     
-    print("commentlist", commentsList)
-    print("timelinecoments", timelineComments)
     comments = {'commentsList' : commentsList, 'timelineComments' : timelineComments}
     return comments
 
