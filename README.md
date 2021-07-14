@@ -7,6 +7,44 @@ And HTML Canvas is used to draw thumnails on the timeline.
 ## Install
 You’ll need to have Node(>= 10), MongoDB, Python3, NPM/Yarn installed on your local development machine.
 
+Installation guidance for MongoDB on Mac OS (https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/ https://attacomsian.com/blog/install-mongodb-macos)
+
+Install the Xcode command-line tools by running the following command in your macOS Terminal:
+`xcode-select --install`
+
+Install MongoDB community:
+Creating data folder for storing MongoDB data:
+
+Before macOS Catalina, you can create this folder in the user's root directory with the following command:
+`$ sudo mkdir -p /data/db`
+adjust permission:
+```$ sudo chown -R `id -un` /data/db```
+
+If you are on macOS Catalina or Big Sur (or any future release), you can not use the root folder for this purpose. macOS Catalina runs in a read-only system volume, separate from other files on the system.
+
+Apple created a secondary volume on Catalina that you need to use for storing MongoDB data folder:
+`$ sudo mkdir -p /System/Volumes/Data/data/db`
+```$ sudo chown -R `id -un` /System/Volumes/Data/data/db```
+
+Installing MongoDB
+You can install the MongoDB community edition with Homebrew. If Homebrew is not already installed, execute the following command first:
+`$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+Now update Homebrew to the latest version:
+`$ brew update`
+Next, tap the MongoDB formulae into Homebrew:
+`$ brew tap mongodb/brew`
+Finally, execute the following command to install the MongoDB community edition:
+`$ brew install mongodb-community`
+
+Managing MongoDB Service
+First of all, install brew services by tapping homebrew/services:
+`$ brew tap homebrew/services`
+To start the MongoDB service, you use the following command:
+`$ brew services start mongodb-community`
+The above command will start MongoDB as a background service. Here's what you will see on the terminal:
+==> Successfully started `mongodb-community` (label: homebrew.mxcl.mongodb-community)
+
 ## Available Scripts
 In the project directory, 
 
