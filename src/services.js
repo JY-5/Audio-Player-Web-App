@@ -9,11 +9,8 @@ export const createComment = (username, comment, timestamp) => {
     .catch( () => Promise.reject({ error: 'network-error'} ) )
     .then( response => {
       if(response.ok) {
-        console.log("response ok");
         return response.json();
       }
-      console.log("response not ok");
-
       return response.json().then( json => Promise.reject(json) );
     });
   }
@@ -25,10 +22,8 @@ export const getComments = () => {
   .catch( () => Promise.reject({ error: 'network-error'} ) )
   .then( response => {
     if(response.ok) {
-      console.log("response", response)
       return response.json();
     }
-    console.log("err");
     return response.json().then( json => Promise.reject(json) );
   });
 };

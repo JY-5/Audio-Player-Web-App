@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export const CommentsList = (props) => {
-
-
     return (
         <>
-
-            <ul>
+            <ul className="comments-list">
                 {props.commentsList ? props.commentsList.map((comment) => {
-                    //console.log('comment', comment);
                     return (<li key={comment._id}>
-                        <img src={comment.avatar} alt=""/>
-                        <p>
-                            <span>{comment.username} </span>
-                            at
-                            <span> {comment.timestamp}</span>
-                        </p>
+                        <div className="info">
+                            <img src={comment.avatar} alt="" className="avatar"/>
+                            <span className="username">{comment.username} </span>
+                            <span className="at"> at </span>
+                            <span className="minute">{Math.floor(comment.timestamp / 60)}</span>
+                            <span> : </span>
+                            <span>{Math.floor(comment.timestamp % 60)}</span>
+                        </div>
                         <p>{comment.comment}</p>
                     </li>)
 
