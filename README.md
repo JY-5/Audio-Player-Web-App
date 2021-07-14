@@ -1,6 +1,8 @@
 # Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), Pthon, Flask, and MongoDB. I use Wavesurfer.js library to show the audio waveform. And HTML Canvas is used to draw thumnails on the timeline.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), Python, Flask, and MongoDB. 
+I use Wavesurfer.js library to show the audio waveform. 
+And HTML Canvas is used to draw thumnails on the timeline.
 
 ## Available Scripts
 
@@ -23,6 +25,9 @@ in Windows:
 ### `python api.py`
 
 and you need also MongoDB running in the local environment.
+## Screenshots
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Screenshots1.png)
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Screenshots2.png)
 
 ## Extra Notes
 1. I do not have time to the last feature - allow a user to read the comment along with the username on the timestamps as they hover over the overlaid thumbnails on the waveform.
