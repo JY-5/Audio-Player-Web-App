@@ -27,17 +27,20 @@ def getComments():
     commentsListCursor = db.comments.find()
     commentsList = []
     timelineComments = []
-    commentsList.sort(key=timesAscend)
 
     for comment in commentsListCursor:
         comment['_id'] = str(comment['_id'])
         comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&rounded=true&size=28&name=" + comment['username'][0:1]
         commentsList.append(comment)
+
+    commentsList.sort(key=timeAscend)
+
+    for i in range(len(commentsList)):
         lastTimelineComment = 0
-        if lastTimelineComment != 0 and comment['timestamp'] == lastTimelineComment['timestamp']:
-            lastTimelineComment['comment'] = comment['comment']
+        while lastTimelineComment != 0 and commentsList[i]['timestamp'] == lastTimelineComment['timestamp']:
+            i += 1
         else:
-            timelineComments.append(comment)
+            timelineComments.append(commentsList[i])
         lastTimelineComment = timelineComments[len(timelineComments) - 1]
 
     for comment in timelineComments:
@@ -48,18 +51,9 @@ def getComments():
     comments = {'commentsList' : commentsList, 'timelineComments' : timelineComments}
     return comments
 
-def timesAscend(item1, item2):
-    if item1['timestamp'] < item2['timestamp']:
-        return -1
-    elif item1['timestamp'] < item2['timestamp']:
-        return 1
-    else:
-        if item1['createdTime'] < item2['createdTime']:
-            return -1
-        elif item1['createdTime'] > item2['createdTime']:
-            return 1
-        else:
-            return 0
+def timeAscend(e):
+    return e['timestamp']
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
