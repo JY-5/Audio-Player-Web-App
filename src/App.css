@@ -50,8 +50,7 @@
   gap: 2rem;
   background-color: #404040;
   border-radius: 4px;
-  padding: 1rem;
-  padding-top: 0;
+  padding: 0 1rem 0 1rem;  
   font-family: Tahoma;
   color: aliceblue;
 }
@@ -59,27 +58,23 @@
 .player-panel .artist {
   background-color: rgba(41, 39, 39, 0.9);
   padding: 0.3rem;
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .player-panel .audio-name {
   background-color: rgba(41, 39, 39, 0.9);
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   padding: 0.4rem;
-}
-
-.player-panel button {
-  border: none;
-  font-size: 3rem;
-  padding: 1rem;
+  margin-top: 0rem;
 }
 
 .player-panel .fa {
   margin: 1rem;
   font-size: 6rem;
   cursor: pointer;
-  color: rgb(255, 131, 7);
+  color: #FF8000;
 }
 
 .player-panel .initial {
@@ -88,12 +83,19 @@
   border-radius: 50%;
 }
 
-.player-panel .timeline-comment {
+.player-panel .canvas-panel {
+  position: relative;
+}
+
+.player-panel .canvas-panel .remove {
   display: none;
 }
 
-.player-panel .canvas-panel {
-  position: relative;
+.player-panel .timeline {
+ background-color: rgba(255, 251, 251, 80%);
+ position: relative;
+ bottom: 10rem;
+ z-index: 0;
 }
 
 .player-panel .waveform {
@@ -101,16 +103,34 @@
 }
 
 .player-panel .canvas {
-  border:1px solid #6d6b6b;
-	z-index: 2;
+	z-index: 3;
   position: absolute;
   top: 13rem;
   left: 0;
 }
 
+.player-panel .timeline-avatar {
+  display: inline-block;
+}
+
+.player-panel .timeline-comment {
+  z-index: 4;
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.player-panel .hidden {
+  visibility: hidden;
+}
+
 .add-comment-panel .username {
   width: 10rem;
   margin-right: 1rem;
+  margin-top: 0.7rem;
 }
 
 .add-comment-panel .comment {
