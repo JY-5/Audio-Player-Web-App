@@ -24,7 +24,7 @@ export const AudioPage = () => {
 
     return (
         <div>
-            <Player fetchComments={fetchComments} timelineComments={comments.timelineComments}/>
+            <Player fetchComments={fetchComments} timelineComments={comments.timelineComments ? comments.timelineComments : []}/>
             <CommentsList commentsList={comments.commentsList} />
         </div>
     )
