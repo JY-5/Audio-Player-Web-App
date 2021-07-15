@@ -51,14 +51,14 @@ to run the back end, you need
 
 in macOS/Linux
 ### `cd api`
+### `source venv/Scripts/activate`
 ### `pip install -r requirements.txt`
-### `. venv/bin/activate`
 ### `python api.py`
 
 in Windows:
 ### `cd api`
-### `pip install -r requirements.txt`
 ### `venv\Scripts\activate`
+### `pip install -r requirements.txt`
 ### `python api.py`
 
 to run the front end, you need
