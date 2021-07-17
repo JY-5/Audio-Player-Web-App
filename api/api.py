@@ -14,11 +14,15 @@ def index():
     return "hello"
 
 @app.route('/api/comment', methods=['POST'])
-def addComent():
+def addComment():
     #add comment
     data = request.get_json()
-    print(data)
+    if (data['timestamp'] == '') | (data['comment'] == ''):
+        return { 'err': "Comment should not be empty"}, 400
+    if data['username'] == '':
+        return { 'err': "Username should not be empty"}, 400
     data['createdTime'] = time.time()
+    data['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&size=28&name=" + data['username'][0:1]
     db.comments.insert_one(data)
     return {}
 
@@ -27,25 +31,19 @@ def getComments():
     commentsListCursor = db.comments.find()
     commentsList = []
     timelineComments = []
-
     for comment in commentsListCursor:
         comment['_id'] = str(comment['_id'])
-        comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&rounded=true&size=28&name=" + comment['username'][0:1]
         commentsList.append(comment)
-
     commentsList.sort(key=timeAscend)
 
+    # Get the latest comment at each timestamp
     for i in range(len(commentsList)):
         lastTimelineComment = 0
         while lastTimelineComment != 0 and commentsList[i]['timestamp'] == lastTimelineComment['timestamp']:
-            i += 1
+            timelineComments[len(timelineComments) - 1] = commentsList[i]
         else:
             timelineComments.append(commentsList[i])
         lastTimelineComment = timelineComments[len(timelineComments) - 1]
-
-    for comment in timelineComments:
-        comment['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&size=28&name=" + comment['username'][0:1]
-    
     comments = {'commentsList' : commentsList, 'timelineComments' : timelineComments}
     return comments
 

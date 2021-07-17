@@ -102,7 +102,7 @@
   z-index: 0;
 }
 
-.player-panel .canvas {
+.player-panel .avatars-canvas {
 	z-index: 3;
   position: absolute;
   top: 13rem;
@@ -178,4 +178,94 @@
 
 .comments-list .minute {
   margin-left: 1rem;
+}
+
+@media (max-width: 670px) {
+  .player-panel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .audio-image {
+    width: 50%;
+  }
+
+  .audio-image-panel {
+    position: absolute;
+    top: 8rem;
+  }
+
+  .info-waveform {
+    position: relative;
+  }
+
+  .canvas-panel {
+    position: absolute;
+    top: 8rem;
+  }
+}
+
+@media (max-width: 590px) {
+  .audio-image-panel {
+    top: 8rem;
+  }
+}
+
+@media (max-width: 535px) {
+  .audio-image-panel {
+    top: 9rem;
+  }
+  
+  .canvas-panel {
+    position: absolute;
+    top: 5rem;
+  }
+}
+
+@media (max-width: 470px) {
+  .audio-image-panel {
+    top: 11rem;
+  }
+  
+  .canvas-panel {
+    position: absolute;
+    top: 5rem;
+  }
+}
+
+@media (max-width: 405px) {
+  .App {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .player-panel {
+    border-right: 0rem;
+    width: 90%;
+  }
+
+  .add-comment-panel .comment {
+    width: 90%;
+  }
+
+  .audio-image-panel {
+    top: 11rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .App {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+
+  .player-panel .fa {
+    margin-left: 0;
+  }
+
+  .audio-info .info {
+    margin-right: 0.5rem;
+  }
 }
