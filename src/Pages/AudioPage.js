@@ -17,6 +17,7 @@ export const AudioPage = () => {
         })
         .catch( err => {
             console.log("error getting comment");
+            //console.log(err);
             //setStatus(err.error);
             //setIsPending(false);
         });    

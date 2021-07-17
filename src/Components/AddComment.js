@@ -7,6 +7,9 @@ export const AddComment = (props) => {
     const [timestamp, setTimestamp] = useState("");
     const [minute, setMinute] = useState(0);
     const [second, setSecond] = useState(0);
+    const maxMinute = Math.floor(props.duration / 60);
+    const maxSecond = Math.floor(props.duration % 60);
+    const [status, setStatus] = useState();
 
     function handleChangeUsername(e) {
         setUsername(e.target.value);
@@ -25,13 +28,17 @@ export const AddComment = (props) => {
     }
 
     function handleChangeMinute(e) {
-        const minuteInput = parseInt(e.target.value);
-        setMinute(minuteInput);
+        let minuteInput = parseInt(e.target.value);
+        if ((typeof minuteInput) !== 'number') {
+            minuteInput = 0;
+            setMinute(0);
+        } else {
+            setMinute(minuteInput);
+        }
+    
         let newTimestamp = minuteInput * 60 + second;
         // If user enter a timestamp that is longer than the audio, 
         // we by default change that to the end of the audio
-        const maxMinute = Math.floor(props.duration / 60);
-        const maxSecond = Math.floor(props.duration % 60);
         if (newTimestamp > props.duration) {
             setMinute(maxMinute);
             setSecond(maxSecond);
@@ -41,17 +48,39 @@ export const AddComment = (props) => {
     }
 
     function handleChangeSecond(e) {
-        const secondInput = parseInt(e.target.value);
-        setSecond(secondInput);
+        let secondInput = parseInt(e.target.value);
+        console.log("s00:", second);
+        console.log(typeof e.target.value);
+
+        if ((typeof secondInput) !== 'number') {
+            secondInput = 0;
+            setSecond(0);
+        } else {
+            setSecond(secondInput);
+        }
+        
         let newTimestamp = minute * 60 + secondInput;
-        const maxMinute = Math.floor(props.duration / 60);
-        const maxSecond = Math.floor(props.duration % 60);
         if (newTimestamp > props.duration) {
             setMinute(maxMinute);
             setSecond(maxSecond);
             newTimestamp = props.duration;
         }
         setTimestamp(newTimestamp);
+    }
+
+    function handleSubmitComment(e) {
+        createComment(username, comment, timestamp)
+        .then(() => {
+            setUsername("");
+            setComment("");
+            setSecond(0);
+            setMinute(0);
+            setTimestamp("");
+            props.fetchComments();
+        })
+        .catch( err => {
+            setStatus(err.err);
+        });
     }
 
     useEffect(() => {
@@ -67,28 +96,16 @@ export const AddComment = (props) => {
         }
     })
 
-    function handleSubmitComment(e) {
-        createComment(username, comment, timestamp)
-        .then(() => {
-            setUsername("");
-            setComment("");
-            setTimestamp("")
-            props.fetchComments();
-        })
-        .catch( err => {
-            console.log("error sending comment", err);
-        });
-    }
-
     return (
         <div className="add-comment-panel">
-            <input type="text" value={username} onChange={handleChangeUsername} className="username" placeholder="Username"/>
-            <input type="text" value={comment} onChange={handleChangeComment} className="comment" placeholder="Write a comment"/>
+            <input type="text" value={username} onChange={handleChangeUsername} className="username" placeholder="Username" />
+            <input type="text" value={comment} onChange={handleChangeComment} className="comment" placeholder="Write a comment" />
             <span> at </span>
-            <input type="text" value={minute} onChange={handleChangeMinute} placeholder="Minute" />
+            <input type="number" min="0" max="59" value={minute} onChange={handleChangeMinute} placeholder="Minute" />
             <span> : </span>
-            <input type="text" value={second} onChange={handleChangeSecond} placeholder="Second" />
+            <input type="number" min="0" max="59" value={second} onChange={handleChangeSecond} placeholder="Second" />
             <input type="submit" value="Post" onClick={handleSubmitComment} className="post"/>
+            <span>{status}</span>
         </div>
     )
 }
