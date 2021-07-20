@@ -80,13 +80,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Comments List:
 ![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/5%20commentsList.png)
 
-### Handle the last second
+### Handle the comment at the last second
 ![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/7%20ending.png)
 
 ### Responsive and adaptive layout
 ![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%202.png)
 
-![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%20on%20Mobile.png)
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%203.png)
 
 ## Reasons to choose a NoSQL database
 1. NoSQL databases allow data schemas to change in the future. It is more convenient for us if product and data models change later.
