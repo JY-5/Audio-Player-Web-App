@@ -1,5 +1,5 @@
 .App {
-  margin: 1rem 3rem 2rem 3rem;
+  margin: 1rem 1rem 2rem 1rem;
   font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif
 }
 
@@ -47,7 +47,7 @@
 .player-panel {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
   background-color: #404040;
   border-radius: 4px;
   padding: 0 1rem 0 1rem;  
@@ -95,7 +95,7 @@
  background-color: rgba(255, 251, 251, 80%);
  position: relative;
  bottom: 10rem;
- z-index: 0;
+ z-index: 3;
 }
 
 .player-panel .waveform {
@@ -118,7 +118,7 @@
   position: absolute;
   top: 6rem;
   left: 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
   display: flex;
   justify-content: center;
 }
@@ -191,6 +191,10 @@
     width: 50%;
   }
 
+  .player-panel .canvas-panel {
+    margin-right: 1.5rem;
+  }
+
   .audio-image-panel {
     position: absolute;
     top: 8rem;
@@ -214,7 +218,7 @@
 
 @media (max-width: 535px) {
   .audio-image-panel {
-    top: 9rem;
+    top: 8rem;
   }
   
   .canvas-panel {
@@ -225,7 +229,7 @@
 
 @media (max-width: 470px) {
   .audio-image-panel {
-    top: 11rem;
+    top: 9rem;
   }
   
   .canvas-panel {
@@ -234,12 +238,7 @@
   }
 }
 
-@media (max-width: 405px) {
-  .App {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
+@media (max-width: 430px) {
   .player-panel {
     border-right: 0rem;
     width: 90%;

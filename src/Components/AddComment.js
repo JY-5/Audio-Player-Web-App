@@ -49,8 +49,6 @@ export const AddComment = (props) => {
 
     function handleChangeSecond(e) {
         let secondInput = parseInt(e.target.value);
-        console.log("s00:", second);
-        console.log(typeof e.target.value);
 
         if ((typeof secondInput) !== 'number') {
             secondInput = 0;
@@ -76,10 +74,11 @@ export const AddComment = (props) => {
             setSecond(0);
             setMinute(0);
             setTimestamp("");
+            setStatus('Success!');
             props.fetchComments();
         })
         .catch( err => {
-            setStatus(err.err);
+            setStatus(err.error);
         });
     }
 
@@ -94,7 +93,7 @@ export const AddComment = (props) => {
                 setSecond(secondInput);
             });
         }
-    })
+    }, [timestamp, props.wavesurferObject])
 
     return (
         <div className="add-comment-panel">
@@ -105,7 +104,7 @@ export const AddComment = (props) => {
             <span> : </span>
             <input type="number" min="0" max="59" value={second} onChange={handleChangeSecond} placeholder="Second" />
             <input type="submit" value="Post" onClick={handleSubmitComment} className="post"/>
-            <span>{status}</span>
+            <div>{status}</div>
         </div>
     )
 }

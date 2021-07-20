@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, request
 from flask_pymongo import PyMongo
 import time
 
@@ -11,16 +11,16 @@ db = mongodb_client.db
 
 @app.route('/api')
 def index():
-    return "hello"
+    return {}
 
 @app.route('/api/comment', methods=['POST'])
 def addComment():
     #add comment
     data = request.get_json()
     if (data['timestamp'] == '') | (data['comment'] == ''):
-        return { 'err': "Comment should not be empty"}, 400
+        return { 'error': "Comment should not be empty"}, 400
     if data['username'] == '':
-        return { 'err': "Username should not be empty"}, 400
+        return { 'error': "Username should not be empty"}, 400
     data['createdTime'] = time.time()
     data['avatar'] = "https://ui-avatars.com/api/?background=random&bold=true&size=28&name=" + data['username'][0:1]
     db.comments.insert_one(data)

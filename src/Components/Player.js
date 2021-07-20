@@ -14,91 +14,6 @@ export const Player = (props) => {
     const timelineCommentRef = useRef();
     const [duration, setDuration] = useState();
     const [wavesurferObject, setWavesurferObject] = useState();
-    const windowOriginalWidth = window.innerWidth;
-
-    useEffect(() => {
-        const avatarsCanvas = avatarsCanvasRef.current;
-        const width = fitToContainer(avatarsCanvas);
-        const ctx = avatarsCanvas.getContext('2d');
-        let timelineCommentsData = [];  
-        
-        const redraw = function() {
-            const remToPixelConversion = Math.round(16 * window.innerWidth / windowOriginalWidth);
-            const distanceToWindowLeft = 4 * remToPixelConversion;
-            const halfAvatarWidth = Math.round(14 * window.innerWidth / windowOriginalWidth);
-
-            ctx.clearRect(0, 0, avatarsCanvas.width, avatarsCanvas.height);
-            timelineCommentsData = [];
-            for (let comment of timelineComments) {
-                const img = new Image();
-                img.src = comment.avatar;
-                img.alt = "";
-                img.onload = function() {
-                    const xCoordinate = comment.timestamp / duration * width;
-                    ctx.drawImage(img, xCoordinate, 0);
-                    const centerXCoordinate = xCoordinate + distanceToWindowLeft + halfAvatarWidth;
-                    timelineCommentsData.push([centerXCoordinate, comment.username, comment.comment, comment.avatar, xCoordinate]);
-                };
-            }
-        }
-
-        redraw();
-        window.addEventListener('resize', redraw);
-
-        avatarsCanvas.addEventListener("mousemove", handleMouseMove);
-
-        function handleMouseMove(e) {
-            // Find center coordinate of the closest avatar to current mouse coordinate x
-            const xCoordinate = e.clientX; // Mouse cursor coordinates x, y
-            let closestX = -1; // the avatar index closest to mouse cursor
-            let minDistance = Number.MAX_VALUE; // min distance from current mouse cursor to closest avatar center
-            for (let i = 0; i < timelineCommentsData.length; i++) {
-                const distance = Math.abs(xCoordinate - timelineCommentsData[i][0]);
-                if (distance <= minDistance) {
-                    closestX = i;
-                    minDistance = distance;
-                }
-            }
-
-            // Display comment when hovering within an avatar rectangle
-            const halfAvatarWidth = Math.round(14 * window.innerWidth / windowOriginalWidth);
-            if (closestX !== -1 && minDistance < halfAvatarWidth) {
-                // Show partially overlaid image
-                const img = new Image();
-                img.src = timelineCommentsData[closestX][3];
-                img.alt = "";
-                ctx.drawImage(img, timelineCommentsData[closestX][4], 0);
-                // Show comment
-                timelineCommentRef.current.classList.remove("hidden");
-                timelineCommentRef.current.innerText = timelineCommentsData[closestX][1] + ": " + timelineCommentsData[closestX][2];
-                // Hover effect basically runs well. But there is still a minor problem sometimes when we zoom in/out. If you want to resize the window, you 
-                // need to refresh the page to ensure hover effect is right
-                /* Debug print:*/
-                /*console.log("closestX: " + closestX +
-                    ", centerXCoordinate: " + timelineCommentsData[closestX][0] +
-                    ", xCoordinate: " + timelineCommentsData[closestX][4] +
-                    ", windowCurrentWidth: " + window.innerWidth +
-                    ", windowOriginalWidth: " + windowOriginalWidth); */
-            } else {
-                timelineCommentRef.current.innerText = "";
-            }
-        }
-
-        return () => {
-            window.removeEventListener('resize', redraw);
-            avatarsCanvas.removeEventListener("mousemove", () => {});
-        }
-    });
-
-    function fitToContainer(canvas){
-        // Make it visually fill the positioned parent
-        canvas.style.width ='100%';
-        canvas.style.height='6%';
-        // ...then set the internal size to match
-        canvas.width  = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        return canvas.width;
-    }
 
     useEffect(() => {
         if(waveformRef.current) {
@@ -136,6 +51,96 @@ export const Player = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        const avatarsCanvas = avatarsCanvasRef.current;
+        // Get width of avatars canvas 
+        let width = fitToContainer(avatarsCanvas);
+        const ctx = avatarsCanvas.getContext('2d');
+        let timelineCommentsData = [];  
+        // 1rem = 16px
+        const remToPixelConversion = 16;
+        // This avatars canvas is 2rem away from the left side of the window
+        const distanceToWindowLeft = 2 * remToPixelConversion;
+        // An avatar is 28px long 
+        const halfAvatarWidth = 14;
+
+        const redraw = function() {
+            ctx.clearRect(0, 0, avatarsCanvas.width, avatarsCanvas.height);
+            // Get current width of avatars canvas 
+            width = fitToContainer(avatarsCanvas);
+
+            timelineCommentsData = [];
+            for (let comment of timelineComments) {
+                const img = new Image();
+                img.src = comment.avatar;
+                img.alt = "";
+                // eslint-disable-next-line no-loop-func
+                img.onload = function() {
+                    // Width of this canvas is 110% of its parent now, 
+                    // we need to convert it to map with the waveform precisely
+                    let xCoordinate = comment.timestamp / duration * width * 100 / 110;
+                    ctx.drawImage(img, xCoordinate, 0);
+                    const centerXCoordinate = (xCoordinate + distanceToWindowLeft + halfAvatarWidth);
+                    timelineCommentsData.push([centerXCoordinate, comment.username, comment.comment, comment.avatar, xCoordinate]);
+                };
+            }
+        }
+        
+        redraw();
+
+        window.addEventListener('resize', redraw);
+
+        avatarsCanvas.addEventListener("mousemove", handleMouseMove);
+
+        function handleMouseMove(e) {
+            // Find center coordinate of the closest avatar to current mouse coordinate x
+            const xCoordinate = e.clientX; // Current mouse cursor coordinates x, y
+
+            let closestX = -1; // The avatar index closest to mouse cursor
+            let minXDistance = Number.MAX_VALUE; // Min x distance from current mouse cursor to closest avatar center
+            for (let i = 0; i < timelineCommentsData.length; i++) {
+                const xDistance = Math.abs(xCoordinate - timelineCommentsData[i][0]);
+
+                if (xDistance <= minXDistance) {
+                    closestX = i;
+                    minXDistance = xDistance;
+                }
+            }
+
+            // Display comment when hovering within an avatar rectangle
+            const halfAvatarWidth = 14;
+            if (closestX !== -1 && minXDistance <= halfAvatarWidth) {
+                // Show partially overlaid image
+                const img = new Image();
+                img.src = timelineCommentsData[closestX][3];
+                img.alt = "";
+                ctx.drawImage(img, timelineCommentsData[closestX][4], 0);
+
+                // Show comment
+                timelineCommentRef.current.classList.remove("hidden");
+                timelineCommentRef.current.innerText = timelineCommentsData[closestX][1] + ": " + timelineCommentsData[closestX][2];
+            } else {
+                timelineCommentRef.current.innerText = "";
+            }
+        }
+
+        return () => {
+            window.removeEventListener('resize', redraw);
+            avatarsCanvas.removeEventListener("mousemove", handleMouseMove);
+        }
+    }, [duration, timelineComments]);
+
+    function fitToContainer(canvas){
+        // Make it visually fill the positioned parent
+        // Make width as 110% of parent to ensure that avatar at the end can show
+        canvas.style.width ='110%';
+        canvas.style.height='7%';
+        // ...then set the internal size to match
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        return canvas.width;
+    }
+
     return (
         <div className="">
             <div className="player-panel">
@@ -152,8 +157,7 @@ export const Player = (props) => {
                             <span className="loading" ref={waveformStatusRef}>Loading...</span>
                         </div>
                         <div ref={timelineRef} className="timeline"></div>
-                        <canvas className="avatars-canvas" ref={avatarsCanvasRef} >
-                        </canvas>
+                        <canvas className="avatars-canvas" ref={avatarsCanvasRef} ></canvas>
                         <span className="timeline-comment hidden" ref={timelineCommentRef}></span>
                     </div>                
                 </div>
