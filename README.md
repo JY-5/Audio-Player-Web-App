@@ -94,3 +94,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 3. NoSQL databases can scale horizontally, which is faster and cheaper for scaling than SQL databases, which are vertically scalable.
 4. SQL databases follow ACID properties (Atomicity, Consistency, Isolation, and Durability), whereas the NoSQL database follows the Brewers CAP theorem (Consistency, Availability and Partition tolerance) and BASE properties ( Basically Available, Soft state, Eventually Consistent). Since the comments on this app is for social networking or leisure, so it is acceptable for us to use NoSQL databases. We probably do not have to follow the highest standard for data integrity, based on our users' needs.
 5. NoSQL databases are easier for developers to implement.
+
+## Notes
+Everything works fine except that the hover effect with y axis has a minor problem. This needs more debugging and overall this almost does not affect the hover effect to show comments timely.
