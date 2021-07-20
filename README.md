@@ -73,8 +73,20 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Screenshots
-![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/S3.png)
-![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/S4.png)
+
+### Player with a hover effect on a user's avatar to show its comment:
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/4%20hover.png)
+
+### Comments List:
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/5%20commentsList.png)
+
+### Handle the last second
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/7%20ending.png)
+
+### Responsive and adaptive layout
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%202.png)
+
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%20on%20Mobile.png)
 
 ## Reasons to choose a NoSQL database
 1. NoSQL databases allow data schemas to change in the future. It is more convenient for us if product and data models change later.
@@ -82,7 +94,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 3. NoSQL databases can scale horizontally, which is faster and cheaper for scaling than SQL databases, which are vertically scalable.
 4. SQL databases follow ACID properties (Atomicity, Consistency, Isolation, and Durability), whereas the NoSQL database follows the Brewers CAP theorem (Consistency, Availability and Partition tolerance) and BASE properties ( Basically Available, Soft state, Eventually Consistent). Since the comments on this app is for social networking or leisure, so it is acceptable for us to use NoSQL databases. We probably do not have to follow the highest standard for data integrity, based on our users' needs.
 5. NoSQL databases are easier for developers to implement.
-
-
-## Notes
-Hover effect basically runs well. But there is still a problem that the hover effect is not precise sometimes when we zoom in/out. If you want to resize the window, you need to refresh the page to ensure hover effect is precise.
