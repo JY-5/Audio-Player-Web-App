@@ -73,8 +73,20 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Screenshots
-![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/S3.png)
-![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/S4.png)
+
+### Player with a hover effect on a user's avatar to show its comment:
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/4%20hover.png)
+
+### Comments List:
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/5%20commentsList.png)
+
+### Handle the last second
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/7%20ending.png)
+
+### Responsive and adaptive layout
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%202.png)
+
+![image](https://github.com/JY-5/Audio-Player-Web-App/blob/main/Screenshots/Responsive%20on%20Mobile.png)
 
 ## Reasons to choose a NoSQL database
 1. NoSQL databases allow data schemas to change in the future. It is more convenient for us if product and data models change later.
