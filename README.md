@@ -96,4 +96,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 5. NoSQL databases are easier for developers to implement.
 
 ## Notes
-Everything works fine except that the hover effect with y axis has a minor problem. This needs more debugging and overall this almost does not affect the hover effect to show comments timely.
+Problem: Everything works fine except that the hover effect with y axis has a minor problem. When cursor moves away from the thumbnail, the comment does not disappear. This needs more debugging and overall this does not affect the hover effect to show comments timely when we hover on different thumbnails.
