@@ -5,6 +5,7 @@ import { getComments } from '../services';
 
 export const AudioPage = () => {
     const [comments, setComments] = useState([]);
+    const [commentsListStatus, setCommentsListStatus] = useState('');
 
     useEffect (() => {
         fetchComments();
@@ -14,12 +15,10 @@ export const AudioPage = () => {
         getComments()
         .then((data) => {
             setComments(data);
+            setCommentsListStatus('');
         })
         .catch( err => {
-            console.log("error getting comment");
-            //console.log(err);
-            //setStatus(err.error);
-            //setIsPending(false);
+            setCommentsListStatus(err.error);
         });    
     }    
 
@@ -27,6 +26,7 @@ export const AudioPage = () => {
         <div>
             <Player fetchComments={fetchComments} timelineComments={comments.timelineComments ? comments.timelineComments : []}/>
             <CommentsList commentsList={comments.commentsList} />
+            <div>{commentsListStatus}</div>
         </div>
     )
 }
